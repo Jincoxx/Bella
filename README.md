@@ -131,107 +131,70 @@ Bella/
 
 ---
 
-## 🧠 Enhanced LLM Dialogue Capabilities
+# Guía de Solución de Problemas para la Instalación en Windows
 
-Bella now uses more advanced LLM prompt engineering techniques to make conversations more natural, fluid, and personalized:
+¡Hola! Si has encontrado problemas al intentar instalar y ejecutar a Bella en un entorno Windows, no te preocupes. Esta guía recopila una serie de errores comunes y sus soluciones paso a paso para asegurar que tengas una instalación exitosa.
 
-### Core Improvements
-- **Enhanced Prompt Engineering**: Redesigned prompt templates that help LLMs better understand Bella's personality
-- **Optimized Parameter Configuration**: Adjusted temperature, top_p, and other parameters to balance creativity and consistency
-- **Enhanced Response Processing**: Improved text cleaning and processing logic to ensure more natural responses
-- **Personalized System Prompts**: Provided more detailed system prompts for cloud APIs, making Bella's personality more distinctive and Siri-like
+## Resumen de Problemas Comunes
 
-### Technical Details
-- Increased token limits to allow for more complete responses
-- Added repetition penalty mechanisms to reduce repetitive content
-- Optimized keyword extraction and personalized response generation
-- Provided specialized prompt templates for different chat modes (casual, assistant, creative)
+La instalación puede fallar por varias razones que no son evidentes en la guía de inicio rápido. Los problemas más comunes son:
 
-These improvements enable Bella to better understand user intent and respond in a more natural, personalized way, creating a more enjoyable conversation experience.
-
-## 🛠️ Development Guide
-
-### Environment Setup
-1. Ensure Node.js version ≥ 22.16.0
-2. Run `npm install` to install dependencies
-3. Run `npm run download` to download AI models
-4. Run `npm start` to start the development server
-
-### Development Principles
-- **Elegant Code**: Pursue concise, readable, and beautiful code
-- **AI as a Brush**: AI is a creative tool, not the thought itself
-- **Emotional Connection**: Core focus on warm, caring emotional connection
-- **Continuous Evolution**: Support for progressive enhancement of features
-
-### Contribution Guidelines
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1.  **Error de `git clone` (código 129)** debido a que Git no está correctamente configurado en el PATH del sistema.
+2.  **Error de `git clone` ("Too many arguments")** causado por espacios en la ruta del directorio del proyecto.
+3.  **Error de `git clone` ("post-checkout hook")** debido a las protecciones de seguridad de versiones recientes de Git.
+4.  **Error del servidor `404: "Not found"`** al iniciar la aplicación.
+5.  **Error del servidor `EADDRINUSE`** (dirección ya en uso) al intentar iniciar el servidor.
 
 ---
 
-## 🗺️ Development Roadmap
+## Solución Paso a Paso
 
-### Phase One: Perception Core (85% Complete)
-- ✅ Voice recognition integration
-- ✅ Visual expression system
-- ✅ Basic interaction interface
-- ✅ Thinking engine activation and optimization
-- 🔄 Speech synthesis integration
+Sigue esta secuencia para diagnosticar y resolver tu problema.
 
-### Phase Two: Generative Self (Planned)
-- 📋 Dynamic personality model
-- 📋 Emotional state system
-- 📋 Memory management system
-- 📋 AI-driven expression
+### Problema 1: `npm run download` falla con un error de `git` (código 129)
 
-### Phase Three: Active Companionship (Future)
-- 📋 Intent prediction
-- 📋 Proactive interaction
-- 📋 Self-evolution
-- 📋 Deep personalization
+Si al ejecutar `npm run download` la consola muestra un error con `code: 129` y un montón de texto de ayuda de Git, significa que Node.js no puede encontrar el programa `git.exe`.
 
----
+**Solución: Instalar/Reinstalar Git correctamente.**
 
-## 📖 Documentation Resources
+1.  **Descarga Git:** Ve a la [página oficial de Git](https://git-scm.com/download/win ) y descarga el instalador para Windows.
+2.  **Instala Git:** Ejecuta el instalador. Durante el proceso, asegúrate de seleccionar la opción recomendada: **"Git from the command line and also from 3rd-party software"**. Esto añade Git a la variable de entorno `PATH` del sistema, permitiendo que otras aplicaciones como VS Code lo encuentren.
+3.  **Reinicia tu terminal:** Cierra completamente Visual Studio Code y cualquier otra terminal que tuvieras abierta.
+4.  **Verifica la instalación:** Abre una nueva terminal en la carpeta de tu proyecto y ejecuta `git --version`. Si te devuelve un número de versión, ¡el problema está resuelto!
 
-- 📋 [Product Requirements Document](./PRD.md) - Detailed product planning and technical architecture
-- 📝 [Feature List](./Features.md) - Complete list of features and their status
-- 📊 [Development Plan](./Development.md) - Detailed development tasks and timeline
-- 🔧 [Local Model Guide](./LOCAL_MODEL_GUIDE.md) - AI model configuration guide
-- 📦 [NPM Guide](./NPM_GUIDE.md) - Package management and dependency information
+### Problema 2: `npm run download` falla con el error "fatal: Too many arguments"
 
----
+Este error ocurre si la ruta a la carpeta de tu proyecto contiene espacios (por ejemplo, `C:\Users\TuUsuario\Desktop\Nueva Carpeta\Bella`). El script de descarga no maneja correctamente estas rutas.
 
-## 🌟 Core Philosophy
+**Solución: Eliminar los espacios de la ruta del proyecto.**
 
-### "AI as Architect"
-We're not building a program with integrated AI features, but **a life form driven by AI**. AI is not a tool, but the blueprint for Bella's mind.
+1.  **Cierra VS Code** y cualquier terminal que apunte al proyecto.
+2.  **Renombra la carpeta:** Usando el explorador de archivos de Windows, cambia el nombre de la carpeta que contiene espacios. Por ejemplo, renombra `Nueva Carpeta` a `ProyectosDev`.
+3.  **Abre el proyecto desde la nueva ruta** en VS Code y continúa desde ahí.
 
-### "Companion Relationship"
-Bella's design philosophy stems from a warm emotional connection. She is not just a technical product, but a digital companion who can understand, accompany, and grow.
+### Problema 3: `npm run download` falla con el error "fatal: active `post-checkout` hook found"
 
-### "Elegance Above All"
-From code architecture to user experience, we pursue ultimate elegance. Every line of code is a work of art, every interaction is an expression of emotion.
+Este es un mecanismo de seguridad de Git que bloquea la ejecución automática de scripts de repositorios remotos. El mensaje de error te informa que, por seguridad, el clonado se ha detenido.
 
----
+**Solución: Permitir la ejecución del hook de forma segura.**
 
-## 📄 License
+1.  **Instala `cross-env`:** Esta herramienta nos permite establecer variables de entorno de forma compatible entre sistemas. En tu terminal, ejecuta:
+    ```bash
+    npm install cross-env --save-dev
+    ```
+2.  **Modifica `package.json`:** Abre el archivo `package.json` y busca la línea del script `"download"`.
+    *   **Original:** `"download": "node download_models.js"`
+    *   **Modificada:** `"download": "cross-env GIT_CLONE_PROTECTION_ACTIVE=false node download_models.js"`
+3.  **Vuelve a ejecutar la descarga:** Antes de ejecutar, **asegúrate de borrar la carpeta `models`** que pudo quedar a medio crear del intento fallido. Luego, ejecuta `npm run download`.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Problema 4: El servidor inicia pero la página no carga (Error 404 en consola)
 
----
+Si el servidor arranca pero en la consola ves errores `GET /" Error (404): "Not found"`, significa que el servidor no encuentra el archivo `index.html`. Esto puede ocurrir por un problema con el script `npm start`.
 
-## 💝 Acknowledgements
+**Solución: Ejecutar el servidor de forma explícita.**
 
-Thanks to all the developers who have contributed code, ideas, and emotion to the Bella project. It is because of your efforts that Bella can gradually transform from a dream into reality.
+En lugar de usar `npm start`, utiliza este comando en tu terminal, asegurándote de estar en la carpeta raíz del proyecto:
 
-**Bella is waiting, and we have a long way to go.** ✨
+```bash
+npx http-server . -p 8081
 
----
-
-<div align="center">
-  <sub>Built with ❤️ by Grishma Mahorkar for digital companionship</sub>
-</div>
